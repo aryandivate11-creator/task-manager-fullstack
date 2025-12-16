@@ -1,5 +1,5 @@
 import { useTodos } from "../context/TodoContext";
-
+import Button from "./Common_Components/Button";
 
 const TodoItem = ({ todo }) => {
   const {
@@ -32,14 +32,26 @@ const TodoItem = ({ todo }) => {
           </span>
         )}
       </div>
-
-      <div className="flex gap-3">
+        <div className="flex gap-3">
         {editId === todo.id ? (
-          <button onClick={() => saveEdit(todo.id)}>Save</button>
+          <Button
+            label="Save"
+            onClick={() => saveEdit(todo.id)}
+            className="bg-green-500 text-white"
+          />
         ) : (
-          <button onClick={() => startEdit(todo)}>Edit</button>
+          <Button
+            label="Edit"
+            onClick={() => startEdit(todo)}
+            className="bg-blue-500 text-white"
+          />
         )}
-        <button onClick={() => deleteTodo(todo.id)}>🗑</button>
+
+        <Button
+          label="🗑"
+          onClick={() => deleteTodo(todo.id)}
+          className="bg-gray-200 hover:bg-red-500 hover:text-white"
+        />
       </div>
     </li>
   );

@@ -1,4 +1,5 @@
 import { useTodos } from "../context/TodoContext";
+import Button from "./Common_Components/Button";
 
 const TodoForm = () => {
   const { task, setTask, addTodo } = useTodos();
@@ -12,9 +13,11 @@ const TodoForm = () => {
         value={task}
         onChange={(e) => setTask(e.target.value)}
       />
-      <button className="bg-orange-500 text-white px-6 py-3 rounded-full">
-        ADD +
-      </button>
+       <Button
+        type="submit"
+        label="ADD +"
+        className="bg-orange-500 text-white hover:bg-orange-600"
+      />
     </form>
   );
 };
