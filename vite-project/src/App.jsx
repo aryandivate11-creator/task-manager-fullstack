@@ -9,6 +9,8 @@ import { Routes, Route } from "react-router-dom";
 import TodoPage from "./pages/TodoPage";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
+import Signup from "./components/auth/signup";
+import Login from "./components/auth/login";
 
 const App = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -30,7 +32,7 @@ const App = () => {
       <Routes>
         {/* Todo Page */}
         <Route
-          path="/"
+          path="/todo"
           element={
             <TodoProvider>
               <TodoApp />
@@ -38,6 +40,9 @@ const App = () => {
           }
         />
 
+        <Route path="/" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        
         {/* Dummy Pages */}
         <Route path="/profile" element={<Profile />} />
         <Route path="/settings" element={<Settings />} />

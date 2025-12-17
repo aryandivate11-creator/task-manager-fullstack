@@ -21,7 +21,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
         <ul className="p-4 space-y-3">
           <li>
-            <Link to="/" onClick={toggleSidebar}>
+            <Link to="/todo" onClick={toggleSidebar}>
               Todos
             </Link>
           </li>
@@ -33,6 +33,16 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
           <li>
             <Link to="/settings" onClick={toggleSidebar}>
               Settings
+            </Link>
+          </li>
+          <li>
+             <Link to="/signup" onClick={toggleSidebar}>
+             Signup
+             </Link>
+          </li>
+          <li>
+            <Link to="/" onClick={toggleSidebar}>
+            Login
             </Link>
           </li>
         </ul>
