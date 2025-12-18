@@ -4,6 +4,7 @@ import Sidebar from "./components/Sidebar";
 import TodoApp from "./components/TodoApp";
 import { TodoProvider } from "./context/TodoContext";
 import { Routes, Route } from "react-router-dom";
+import ProtectedRoute from "./components/routes/ProtectedRoute"
 
 
 import TodoPage from "./pages/TodoPage";
@@ -14,6 +15,10 @@ import Login from "./components/auth/login";
 
 const App = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(
+  localStorage.getItem("isLoggedIn") === "true"
+);
+
 
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
@@ -21,34 +26,43 @@ const App = () => {
 
   return (
     <div className="min-h-screen bg-zinc-900">
-      {/* Navbar */}
-      <Navbar toggleSidebar={toggleSidebar} />
 
-      {/* Sidebar */}
-      <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+      {/* Navbar & Sidebar ONLY after login */}
+      {isLoggedIn && (
+           <>
+           <Navbar
+           toggleSidebar={toggleSidebar}
+          setIsLoggedIn={setIsLoggedIn}
+          />
+        <Sidebar
+        isOpen={isSidebarOpen}
+        toggleSidebar={toggleSidebar}
+          />
+         </>
+)}
 
       {/* Main Content */}
-      <div className="pt-14">
-      <Routes>
-        {/* Todo Page */}
-        <Route
-          path="/todo"
-          element={
-            <TodoProvider>
-              <TodoApp />
-            </TodoProvider>
-          }
-        />
+      <div className={isLoggedIn ? "pt-14" : ""}>
+        <Routes>
+          <Route
+            path="/todo"
+            element={
+              <ProtectedRoute>
+                <TodoProvider>
+                  <TodoApp />
+                </TodoProvider>
+              </ProtectedRoute>
+            }
+          />
 
-        <Route path="/" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        
-        {/* Dummy Pages */}
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/Todopage" element={<TodoPage />} />
-      </Routes>
-    </div>
+          <Route path="/" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+          <Route path="/signup" element={<Signup />} />
+
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/Todopage" element={<TodoPage />} />
+        </Routes>
+      </div>
     </div>
   );
 };

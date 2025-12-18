@@ -35,7 +35,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
               Settings
             </Link>
           </li>
-          <li>
+          {/* <li>
              <Link to="/signup" onClick={toggleSidebar}>
              Signup
              </Link>
@@ -44,7 +44,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             <Link to="/" onClick={toggleSidebar}>
             Login
             </Link>
-          </li>
+          </li> */}
         </ul>
       </div>
     </>

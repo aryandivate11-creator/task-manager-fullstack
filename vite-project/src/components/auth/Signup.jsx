@@ -1,6 +1,10 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -85,13 +89,17 @@ const Signup = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (!validate()) return;
+  if (!validate()) return;
 
-    localStorage.setItem("user", JSON.stringify(formData));
-    alert("Signup successful!");
-  };
+  localStorage.setItem("user", JSON.stringify(formData));
+
+  alert("Signup successful! Please login.");
+
+  navigate("/"); // 👈 redirect to login
+};
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-zinc-900 text-white">
@@ -150,7 +158,7 @@ const Signup = () => {
             </button>
           </div>
           {errors.password && (
-            <p className="text-red-400 text-sm mt-1">
+            <p className="text-red-900 text-sm mt-1">
               {errors.password}
             </p>
           )}
@@ -172,6 +180,16 @@ const Signup = () => {
         >
           Sign Up
         </button>
+        <p className="text-center text-md text-zinc-900">
+         Already have an account?{" "}
+         <Link
+         to="/"
+         className="text-red-900 hover:underline"
+         >
+          Login
+         </Link>
+         </p>
+
       </form>
     </div>
   );

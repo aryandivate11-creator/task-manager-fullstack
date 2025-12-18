@@ -1,10 +1,26 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
-const Login = () => {
+
+
+const Login = ({setIsLoggedIn}) => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+  if (isLoggedIn) {
+    navigate("/todo");
+  }
+}, [navigate]);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [showPassword, setShowPassword] = useState(false); // 👈 NEW
+  const [showPassword, setShowPassword] = useState(false);
+
+ 
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,7 +37,10 @@ const Login = () => {
       storedUser.password === password
     ) {
       setError("");
-      alert("Login successful!");
+
+      localStorage.setItem("isLoggedIn", "true"); // persist login
+      setIsLoggedIn(true);                        // update React state
+      navigate("/todo");                         // go to Todo page
     } else {
       setError("Invalid email or password");
     }
@@ -44,7 +63,7 @@ const Login = () => {
           className="w-full px-4 py-3 rounded-lg text-black text-lg border border-zinc-500"
         />
 
-        {/* Password with Show / Hide */}
+        {/* Password */}
         <div className="relative">
           <input
             type={showPassword ? "text" : "password"}
@@ -73,6 +92,16 @@ const Login = () => {
         >
           Login
         </button>
+        <p className="text-center text-md text-zinc-900">
+          Don’t have an account?{" "}
+       <Link
+        to="/signup"
+       className="text-red-900 hover:underline"
+         >
+           Signup
+        </Link>
+       </p>
+
       </form>
     </div>
   );
