@@ -1,27 +1,59 @@
+import { AppBar, Toolbar, IconButton, Button, Typography } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
 import { useNavigate } from "react-router-dom";
 
 const Navbar = ({ toggleSidebar, setIsLoggedIn }) => {
   const navigate = useNavigate();
 
- const handleLogout = () => {
-  localStorage.removeItem("isLoggedIn");
-  setIsLoggedIn(false); // ❗ needs access
-  navigate("/");
-};
+  const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn");
+    setIsLoggedIn(false);
+    navigate("/");
+  };
 
   return (
-    <div className="h-14 bg-zinc-900 text-white flex items-center justify-between px-4">
-      <button onClick={toggleSidebar} className="text-2xl">
-        ☰
-      </button>
+    <AppBar
+      position="fixed"
+      sx={{
+        backgroundColor: "#020617",
+        boxShadow: "none",
+        borderBottom: "1px solid #1e293b",
+      }}
+    >
+      <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+        {/* Left: Hamburger */}
+        <IconButton
+          edge="start"
+          color="inherit"
+          onClick={toggleSidebar}
+        >
+          <MenuIcon />
+        </IconButton>
 
-      <button
-        onClick={handleLogout}
-        className="text-sm bg-zinc-700 px-3 py-1 rounded"
-      >
-        Logout
-      </button>
-    </div>
+        {/* Center: Title */}
+        <Typography
+          variant="h6"
+          sx={{ fontWeight: 600 }}
+        >
+          Todo App
+        </Typography>
+
+        {/* Right: Logout */}
+        <Button
+          onClick={handleLogout}
+          sx={{
+            color: "#f97316",
+            border: "1px solid #f97316",
+            "&:hover": {
+              backgroundColor: "#f97316",
+              color: "#020617",
+            },
+          }}
+        >
+          Logout
+        </Button>
+      </Toolbar>
+    </AppBar>
   );
 };
 

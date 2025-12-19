@@ -1,3 +1,9 @@
+import {
+  Box,
+  Checkbox,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useTodos } from "../context/UseTodos.js";
 import Button from "./Common_Components/Button";
 
@@ -13,47 +19,80 @@ const TodoItem = ({ todo }) => {
   } = useTodos();
 
   return (
-    <li className="flex items-center justify-between">
-      <div className="flex items-center gap-4">
-        <input
-          type="checkbox"
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        gap: 2,
+      }}
+    >
+      {/* Left */}
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          gap: 2,
+        }}
+      >
+        <Checkbox
           checked={todo.completed}
           onChange={() => toggleTodo(todo.id)}
+          color="success"
         />
 
         {editId === todo.id ? (
-          <input
+          <TextField
+            size="small"
             value={editText}
             onChange={(e) => setEditText(e.target.value)}
+             sx={{
+             backgroundColor: "#f8fafc",
+             borderRadius: 1,
+             input: {
+             color: "#020617",
+             fontWeight: 500,
+                 },
+               }}
           />
         ) : (
-          <span className={todo.completed ? "line-through" : ""}>
+          <Typography
+            sx={{
+              textDecoration: todo.completed
+                ? "line-through"
+                : "none",
+              color: todo.completed ? "#94a3b8" : "#f8fafc",
+              fontWeight: todo.completed ? 400 : 500,
+            }}
+          >
             {todo.text}
-          </span>
+          </Typography>
         )}
-      </div>
-        <div className="flex gap-3">
+      </Box>
+
+      {/* Actions */}
+      <Box sx={{ display: "flex", gap: 1 }}>
         {editId === todo.id ? (
           <Button
             label="Save"
             onClick={() => saveEdit(todo.id)}
-            className="bg-green-500 text-white"
+            color="success"
           />
         ) : (
           <Button
             label="Edit"
             onClick={() => startEdit(todo)}
-            className="bg-blue-500 text-white"
+            color="primary"
           />
         )}
 
         <Button
           label="🗑"
           onClick={() => deleteTodo(todo.id)}
-          className="bg-gray-200 hover:bg-red-500 hover:text-white"
+          color="error"
         />
-      </div>
-    </li>
+      </Box>
+    </Box>
   );
 };
 

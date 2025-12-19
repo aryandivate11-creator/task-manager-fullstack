@@ -1,53 +1,62 @@
+import {
+  Drawer,
+  List,
+  ListItemButton,
+  ListItemText,
+  Box,
+  Typography,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
   return (
-    <>
-      {isOpen && (
-        <div
-          onClick={toggleSidebar}
-          className="fixed inset-0 bg-black/40 z-40"
-        />
-      )}
-
-      <div
-        className={`fixed top-0 left-0 h-full w-64 bg-zinc-800 text-white
-        transform transition-transform duration-300 z-50
-        ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
+    <Drawer
+      anchor="left"
+      open={isOpen}
+      onClose={toggleSidebar}
+      PaperProps={{
+        sx: {
+          width: 260,
+          backgroundColor: "#020617",
+          color: "white",
+        },
+      }}
+    >
+      {/* Header */}
+      <Box
+        sx={{
+          p: 2,
+          borderBottom: "1px solid #1e293b",
+        }}
       >
-        <div className="p-4 text-lg font-semibold border-b border-zinc-700">
+        <Typography variant="h6" fontWeight={600}>
           Menu
-        </div>
+        </Typography>
+      </Box>
 
-        <ul className="p-4 space-y-3">
-          <li>
-            <Link to="/todo" onClick={toggleSidebar}>
-              Todos
-            </Link>
-          </li>
-          <li>
-            <Link to="/profile" onClick={toggleSidebar}>
-              Profile
-            </Link>
-          </li>
-          <li>
-            <Link to="/settings" onClick={toggleSidebar}>
-              Settings
-            </Link>
-          </li>
-          {/* <li>
-             <Link to="/signup" onClick={toggleSidebar}>
-             Signup
-             </Link>
-          </li>
-          <li>
-            <Link to="/" onClick={toggleSidebar}>
-            Login
-            </Link>
-          </li> */}
-        </ul>
-      </div>
-    </>
+      {/* Links */}
+      <List>
+        {[
+          { label: "Todos", path: "/todo" },
+          { label: "Profile", path: "/profile" },
+          { label: "Settings", path: "/settings" },
+        ].map((item) => (
+          <ListItemButton
+            key={item.label}
+            component={Link}
+            to={item.path}
+            onClick={toggleSidebar}
+            sx={{
+              "&:hover": {
+                backgroundColor: "#1e293b",
+              },
+            }}
+          >
+            <ListItemText primary={item.label} />
+          </ListItemButton>
+        ))}
+      </List>
+    </Drawer>
   );
 };
 

@@ -1,17 +1,27 @@
+import MuiButton from "@mui/material/Button";
+
 const Button = ({
   label,
   onClick,
-  className = "",
   type = "button",
+  variant = "contained",
+  color = "primary",
+  fullWidth = false,
+  sx = {},
+  disabled = false,
 }) => {
   return (
-    <button
+    <MuiButton
       type={type}
       onClick={onClick}
-      className={`px-6 py-3 rounded-full ${className}`}
+      variant={variant}
+      color={color}
+      fullWidth={fullWidth}
+      sx={sx}
+      disabled={disabled}
     >
       {label}
-    </button>
+    </MuiButton>
   );
 };
 

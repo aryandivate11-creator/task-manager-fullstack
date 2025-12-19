@@ -1,26 +1,33 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
 
+import {
+  Box,
+  Paper,
+  TextField,
+  Button,
+  Typography,
+  IconButton,
+  InputAdornment,
+  Divider,
+} from "@mui/material";
 
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-const Login = ({setIsLoggedIn}) => {
+const Login = ({ setIsLoggedIn }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-  const isLoggedIn = localStorage.getItem("isLoggedIn");
-  if (isLoggedIn) {
-    navigate("/todo");
-  }
-}, [navigate]);
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    if (isLoggedIn) {
+      navigate("/todo");
+    }
+  }, [navigate]);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
- 
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -37,73 +44,159 @@ const Login = ({setIsLoggedIn}) => {
       storedUser.password === password
     ) {
       setError("");
-
-      localStorage.setItem("isLoggedIn", "true"); // persist login
-      setIsLoggedIn(true);                        // update React state
-      navigate("/todo");                         // go to Todo page
+      localStorage.setItem("isLoggedIn", "true");
+      setIsLoggedIn(true);
+      navigate("/todo");
     } else {
       setError("Invalid email or password");
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-zinc-900 text-white">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-zinc-400 p-8 rounded-xl w-[420px] space-y-6 shadow-lg"
+    <Box
+      sx={{
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background:
+          "radial-gradient(circle at top, #1e293b, #020617)",
+      }}
+    >
+      <Paper
+        elevation={10}
+        sx={{
+          width: 420,
+          padding: "32px",
+          borderRadius: "20px",
+          backgroundColor: "#0f172a",
+        }}
       >
-        <h2 className="text-3xl font-bold text-center">Login</h2>
+        {/* Header */}
+        <Box textAlign="center" mb={3}>
+          <Typography
+            variant="h5"
+            fontWeight="700"
+            color="white"
+          >
+            Welcome back
+          </Typography>
+          <Typography
+            variant="body2"
+            sx={{ color: "#94a3b8" }}
+          >
+            Login to continue
+          </Typography>
+        </Box>
 
-        {/* Email */}
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-full px-4 py-3 rounded-lg text-black text-lg border border-zinc-500"
-        />
+        <Divider sx={{ mb: 3 }} />
 
-        {/* Password */}
-        <div className="relative">
-          <input
+        {/* Form */}
+        <Box component="form" onSubmit={handleSubmit}>
+          <TextField
+            fullWidth
+            label="Email"
+            margin="normal"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            InputLabelProps={{ style: { color: "#94a3b8" } }}
+            sx={{
+              input: { color: "white" },
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: "#334155",
+                },
+                "&:hover fieldset": {
+                  borderColor: "#64748b",
+                },
+              },
+            }}
+          />
+
+          <TextField
+            fullWidth
+            label="Password"
+            margin="normal"
             type={showPassword ? "text" : "password"}
-            placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-4 py-3 rounded-lg text-black text-lg border border-zinc-500"
+            InputLabelProps={{ style: { color: "#94a3b8" } }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() =>
+                      setShowPassword((prev) => !prev)
+                    }
+                    sx={{ color: "#94a3b8" }}
+                  >
+                    {showPassword ? (
+                      <VisibilityOff />
+                    ) : (
+                      <Visibility />
+                    )}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+            sx={{
+              input: { color: "white" },
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: "#334155",
+                },
+                "&:hover fieldset": {
+                  borderColor: "#64748b",
+                },
+              },
+            }}
           />
-          <button
-            type="button"
-            onClick={() => setShowPassword((prev) => !prev)}
-            className="absolute right-3 top-3 text-sm text-zinc-600"
+
+          {error && (
+            <Typography
+              color="error"
+              variant="body2"
+              mt={1}
+            >
+              {error}
+            </Typography>
+          )}
+
+          <Button
+            type="submit"
+            fullWidth
+            sx={{
+              color: "white",
+              mt: 3,
+              py: 1.4,
+              fontSize: "1rem",
+              fontWeight: 600,
+              backgroundColor: "#f97316",
+              "&:hover": {
+                backgroundColor: "#ea580c",
+              },
+            }}
           >
-            {showPassword ? "Hide" : "Show"}
-          </button>
-        </div>
+            Login
+          </Button>
 
-        {/* Error */}
-        {error && (
-          <p className="text-red-400 text-sm">{error}</p>
-        )}
-
-        <button
-          type="submit"
-          className="w-full bg-orange-500 hover:bg-orange-600 transition py-3 rounded-lg text-lg font-semibold"
-        >
-          Login
-        </button>
-        <p className="text-center text-md text-zinc-900">
-          Don’t have an account?{" "}
-       <Link
-        to="/signup"
-       className="text-red-900 hover:underline"
-         >
-           Signup
-        </Link>
-       </p>
-
-      </form>
-    </div>
+          <Typography
+            variant="body2"
+            align="center"
+            mt={3}
+            sx={{ color: "#94a3b8" }}
+          >
+            Don’t have an account?{" "}
+            <Link
+              to="/signup"
+              style={{ color: "#f97316" }}
+            >
+              Signup
+            </Link>
+          </Typography>
+        </Box>
+      </Paper>
+    </Box>
   );
 };
 
