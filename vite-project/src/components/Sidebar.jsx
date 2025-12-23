@@ -37,6 +37,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       {/* Links */}
       <List>
         {[
+          { label: "Dashboard", path: "/dashboard" },
           { label: "Todos", path: "/todo" },
           { label: "Profile", path: "/profile" },
           { label: "Settings", path: "/settings" },

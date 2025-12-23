@@ -19,8 +19,9 @@ const TodoApp = () => {
         elevation={10}
         sx={{
           width: "100%",
-          maxWidth: 520,
-          p: 4,
+          maxWidth: { xs: "100%", sm: 480, md: 520 },
+          mx: { xs: 1, sm: "auto" },
+          p: { xs: 2, sm: 4 },
           borderRadius: 3,
           background: "linear-gradient(145deg, #1e293b, #0f172a)",
           border: "1px solid #334155",

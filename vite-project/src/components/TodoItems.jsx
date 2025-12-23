@@ -63,6 +63,8 @@ const TodoItem = ({ todo }) => {
                 : "none",
               color: todo.completed ? "#94a3b8" : "#f8fafc",
               fontWeight: todo.completed ? 400 : 500,
+              wordBreak: "break-word",
+              maxWidth: { xs: 180, sm: 300 },
             }}
           >
             {todo.text}
