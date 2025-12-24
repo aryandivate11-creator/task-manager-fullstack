@@ -22,7 +22,7 @@ export const signup = async (req,res) =>{
           error:"User already exists !"
         });
       }
-
+   
       const hashedpassword = await bcrypt.hash(password,10);
       console.log("Hashed password:", hashedpassword);
 
