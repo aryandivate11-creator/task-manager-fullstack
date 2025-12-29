@@ -1,10 +1,11 @@
+import { Token } from "@mui/icons-material";
 import { Navigate } from "react-router-dom";
 
 const ProtectedRoute = ({ children }) => {
-  const isLoggedIn = localStorage.getItem("isLoggedIn");
+  const token = localStorage.getItem("token");
 
-  if (!isLoggedIn) {
-    return <Navigate to="/" />;
+  if (!token) {
+    return <Navigate to="/" replace />;
   }
 
   return children;

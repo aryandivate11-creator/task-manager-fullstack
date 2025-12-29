@@ -1,5 +1,7 @@
 import bcrypt from "bcrypt";
 import pool from "../config/db.js";
+import { generateToken } from "../utils/jwt.js";
+
 
 export const signup = async (req,res) =>{
     const {email , password , username, phone} = req.body;
@@ -92,12 +94,21 @@ export const login = async (req,res) =>{
          })
       };
 
+      const token = generateToken({
+         id : user.id,
+         username : user.username,
+         email : user.email,
+         phone : user.phone
+      });
+
       res.status(200).json({
          message:"Login Successful",
+         token,
          user:{
             id: user.id,
             username: user.username,
             email: user.email,
+            phone: user.phone
          },
       });
      } catch (error) {

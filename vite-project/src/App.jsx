@@ -11,14 +11,14 @@ import TodoPage from "./pages/TodoPage";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 import Signup from "./components/auth/signup";
-import Login from "./components/auth/login";
+import Login from "./components/auth/Login";
 import Dashboard from "./pages/Dashboard";
 
 
 const App = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(
-  localStorage.getItem("isLoggedIn") === "true"
+  localStorage.getItem("isloggedin") === "true"
 );
 
 

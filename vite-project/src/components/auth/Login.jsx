@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, data } from "react-router-dom";
 
 import {
   Box,
@@ -18,7 +18,7 @@ const Login = ({ setIsLoggedIn }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    const isLoggedIn = localStorage.getItem("isloggedin");
     if (isLoggedIn) {
       navigate("/todo");
     }
@@ -29,28 +29,35 @@ const Login = ({ setIsLoggedIn }) => {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    try {
+      const res = await fetch('http://localhost:3000/api/auth/login',{
+        method:'POST',
+        headers:{
+          'content-type':'application/json',
+        },
+        body:JSON.stringify({email,password}),
+      }
+    );
+      const data = await res.json();
 
-    const storedUser = JSON.parse(localStorage.getItem("user"));
+      if(!res.ok){
+        setError(data.error);
+        return;
+      }
 
-    if (!storedUser) {
-      setError("No account found. Please signup first.");
-      return;
-    }
+      localStorage.setItem("token",data.token);
+      localStorage.setItem("isloggedin",true);
+      localStorage.setItem("user", JSON.stringify(data.user));
 
-    if (
-      storedUser.email === email &&
-      storedUser.password === password
-    ) {
-      setError("");
-      localStorage.setItem("isLoggedIn", "true");
       setIsLoggedIn(true);
       navigate("/todo");
-    } else { 
-      setError("Invalid email or password");
+    } catch (error) {
+      setError("Server not reachable. Please try again later.")
     }
-  };
+ };
 
   return (
     <Box

@@ -6,7 +6,7 @@ const Navbar = ({ toggleSidebar, setIsLoggedIn }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("isloggedin");
     setIsLoggedIn(false);
     navigate("/");
   };
