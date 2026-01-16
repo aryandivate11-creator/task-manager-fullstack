@@ -111,6 +111,7 @@ export const login = async (req,res) =>{
             phone: user.phone
          },
       });
+      
      } catch (error) {
       console.error(error);
       res.status(500).json({

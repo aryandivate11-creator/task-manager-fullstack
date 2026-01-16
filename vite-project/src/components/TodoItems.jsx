@@ -37,7 +37,7 @@ const TodoItem = ({ todo }) => {
       >
         <Checkbox
           checked={todo.completed}
-          onChange={() => toggleTodo(todo.id)}
+          onChange={(e) => toggleTodo(todo.id, e.target.checked)}
           color="success"
         />
 
@@ -67,7 +67,7 @@ const TodoItem = ({ todo }) => {
               maxWidth: { xs: 180, sm: 300 },
             }}
           >
-            {todo.text}
+            {todo.title}
           </Typography>
         )}
       </Box>
